@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f9;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 20px;
+            background-color: #007BFF;
+            color: white;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background 0.3s ease-in-out;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+        th {
+            background-color: #007BFF;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        tr:hover {
+            background-color: #e9ecef;
+            transition: 0.3s;
+        }
+
+        td a {
+            padding: 6px 12px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+            transition: background 0.3s;
+        }
+
+        td a[href*="edit_user"] {
+            background-color: #28a745;
+        }
+
+        td a[href*="edit_user"]:hover {
+            background-color: #218838;
+        }
+
+        td a[href*="delete"] {
+            background-color: #dc3545;
+        }
+
+        td a[href*="delete"]:hover {
+            background-color: #c82333;
+        }
+
+        @media (max-width: 768px) {
+            table, th, td {
+                display: block;
+                width: 100%;
+            }
+
+            th {
+                display: none;
+            }
+
+            tr {
+                margin-bottom: 10px;
+                display: block;
+                border: 1px solid #ddd;
+                border-radius: 10px;
+                padding: 10px;
+            }
+
+            td {
+                text-align: right;
+                position: relative;
+                padding-left: 50%;
+            }
+
+            td:before {
+                content: attr(data-label);
+                position: absolute;
+                left: 10px;
+                width: 45%;
+                padding-right: 10px;
+                font-weight: bold;
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>User Management</h1>
+        <a href="add_user" class="btn">Add User</a>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Mobile No.</th>
+                <th>Password</th>
+                <th>Gender</th>
+                <th>Address</th>
+                <th>Salary</th>
+                <th>Designation</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            <% if (result) {%>
+                <% result.forEach((element)=>{%>
+            <tr>
+                <td data-label="ID"><%= element.user_id %></td>
+                <td data-label="First Name"><%= element.first_name %></td>
+                <td data-label="Last Name"><%= element.last_name %></td>
+                <td data-label="Email"><%= element.email %></td>
+                <td data-label="Mobile No."><%= element.phone_no %></td>
+                <td data-label="Password"><%= element.password %></td>
+                <td data-label="Gender"><%= element.gender %></td>
+                <td data-label="Address"><%= element.address %></td>
+                <td data-label="Salary"><%= element.salary %></td>
+                <td data-label="Designation"><%= element.designation %></td>
+                <td data-label="Edit"><a href="/edit_user/<%= element.user_id%>">Edit</a></td>
+                <td data-label="Delete"><a href="/delete/<%= element.user_id%>">Delete</a></td>
+            </tr>
+            <% }) %>
+            <% } %>
+        </table>
+    </div>
+</body>
+</html>

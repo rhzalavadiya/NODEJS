@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit User</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        td {
+            padding: 10px;
+            font-size: 16px;
+            color: #555;
+        }
+
+        input[type="text"], input[type="password"], input[type="email"], select {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+            color: #333;
+        }
+
+        input[type="submit"], input[type="reset"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 48%;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        input[type="submit"]:hover, input[type="reset"]:hover {
+            background-color: #45a049;
+        }
+
+        input[type="reset"] {
+            background-color: #f44336;
+        }
+
+        input[type="reset"]:hover {
+            background-color: #e53935;
+        }
+
+        select {
+            padding: 8px;
+            font-size: 14px;
+            color: #333;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            width: 100%;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group td {
+            width: 50%;
+        }
+
+        .form-actions {
+            text-align: center;
+        }
+
+        .container table th {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+        }
+
+        .container input[type="reset"], .container input[type="submit"] {
+            margin-top: 10px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Edit User Detail</h1>
+        <form id="edit_user" action="/edit_user/<%= result[0].user_id %>" method="POST" onsubmit="return validateForm()">
+            <table>
+                <tr class="form-group">
+                    <td>First Name</td>
+                    <td><input type="text" name="first_name" id="first_name" value="<%= result[0].first_name %>" required/></td>
+                </tr>
+                <tr class="form-group">
+                    <td>Last Name</td>
+                    <td><input type="text" name="last_name" id="last_name" value="<%= result[0].last_name %>" required/></td>
+                </tr>
+                <tr class="form-group">
+                    <td>Email</td>
+                    <td><input type="email" name="email" id="email" value="<%= result[0].email %>" required/></td>
+                </tr>
+                <tr class="form-group">
+                    <td>Mobile No.</td>
+                    <td><input type="text" name="phone_no" id="phone_no" value="<%= result[0].phone_no %>" required/></td>
+                </tr>
+                <tr class="form-group">
+                    <td>Password</td>
+                    <td><input type="password" name="password" id="password" value="<%= result[0].password %>" required/></td>
+                </tr>
+                <tr class="form-group">
+                    <td>Confirm Password</td>
+                    <td><input type="password" name="confirm_password" id="confirm_password" required></td>
+                </tr>
+                <tr class="form-group">
+                    <td>Gender</td>
+                    <td>
+                        <select name="gender" id="gender" required>
+                            <option value="">Select</option>
+                            <option value="Male" <% if(result[0].gender === 'Male') { %> selected <% } %>>Male</option>
+                            <option value="Female" <% if(result[0].gender === 'Female') { %> selected <% } %>>Female</option>
+                            <option value="Other" <% if(result[0].gender === 'Other') { %> selected <% } %>>Other</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr class="form-group">
+                    <td>Address</td>
+                    <td><input type="text" name="address" id="address" value="<%= result[0].address %>" required></td>
+                </tr>
+                <tr class="form-group">
+                    <td>Salary</td>
+                    <td><input type="text" name="salary" id="salary" maxlength="10" required oninput="this.value=this.value.replace(/[^0-9]/g,'');" value="<%= result[0].salary %>" required/></td>
+                </tr>
+                <tr class="form-group">
+                    <td>Designation</td>
+                    <td><input type="text" name="designation" id="designation" value="<%= result[0].designation %>" required/></td>
+                </tr>
+                <tr class="form-actions">
+                    <td colspan="2">
+                        <input type="submit" value="Edit" name="submit" id="submit"/>
+                        <input type="reset" value="Cancel" name="cancel" id="cancel"/>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    <script>
+        // Function to validate form input
+        function validateForm() {
+            var firstName = document.getElementById("first_name").value;
+            var lastName = document.getElementById("last_name").value;
+            var email = document.getElementById("email").value;
+            var phoneNo = document.getElementById("phone_no").value;
+            var salary = document.getElementById("salary").value;
+            var gender = document.getElementById("gender").value;
+            var designation = document.getElementById("designation").value;
+            var password = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("confirm_password").value;
+
+            var namePattern = /^[A-Za-z]+$/;  // Only alphabetic characters
+            var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+            var passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            var phonePattern = /^[0-9]{10}$/;
+            var salaryPattern = /^[0-9]+(\.[0-9]{1,2})?$/;
+            var designationPattern = /^[A-Za-z ]+$/; // Only alphabetic characters and spaces
+
+            // Validate First Name (only alphabetic characters)
+            if (!namePattern.test(firstName)) {
+                alert("First Name must contain only alphabetic characters.");
+                return false;
+            }
+
+            // Validate Last Name (only alphabetic characters)
+            if (!namePattern.test(lastName)) {
+                alert("Last Name must contain only alphabetic characters.");
+                return false;
+            }
+
+            // Validate Email
+            if (!emailPattern.test(email)) {
+                alert("Please enter a valid email address.");
+                return false;
+            }
+
+            // Validate Password
+            if (!passwordPattern.test(password)) {
+                alert("Password must contain uppercase, lowercase, number, and special character.");
+                return false;
+            }
+            if (password !== confirmPassword) {
+                alert("Passwords do not match!");
+                return false;
+            }
+
+            // Validate Phone Number (only numbers and 10 digits)
+            if (!phonePattern.test(phoneNo)) {
+                alert("Please enter a valid phone number (10 digits).");
+                return false;
+            }
+
+            // Validate Salary (only numbers and optionally with two decimal places)
+            if (!salaryPattern.test(salary)) {
+                alert("Please enter a valid salary (numbers only, optional decimal places).");
+                return false;
+            }
+
+            // Validate Gender
+            if (gender === "") {
+                alert("Please select a gender.");
+                return false;
+            }
+
+            // Validate Designation (only alphabetic characters and spaces)
+            if (!designationPattern.test(designation)) {
+                alert("Designation must contain only alphabetic characters and spaces.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</body>
+</html>
